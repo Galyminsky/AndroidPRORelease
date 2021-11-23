@@ -11,6 +11,8 @@
     //themes
     <color name="pink_800">#ad1457</color>
     <color name="pink_800_dark">#78002e</color>
+    <color name="pink_800_light">#F8BBD0</color>
     <color name="green_800">#2e7d32</color>
     <color name="green_800_dark">#005005</color>
+    <color name="green_800_light">#60ad5e</color>
 </resources>
