@@ -1,7 +1,10 @@
 package com.example.lightdictionary.presenter
 
-class MainPresenter : MainController.Presenter {
+import com.example.lightdictionary.domain.WordRepo
+
+class MainPresenter(private val wordRepo: WordRepo) : MainController.Presenter {
     private var view: MainController.View? = null
+    private val interactor: MainController.Interactor by lazy { MainInteractor(wordRepo) }
 
     override fun attachView(view: MainController.View) {
         this.view = view
@@ -15,7 +18,7 @@ class MainPresenter : MainController.Presenter {
         view?.showSearchInputScreen()
     }
 
-    override fun onGetNewWord(word: String) {
-
+    override fun onGetInputWord(word: String) {
+        interactor.getData(word)
     }
 }
