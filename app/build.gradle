@@ -1,7 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
 }
+
+Properties localProperties = new Properties()
+localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
 
 android {
     compileSdk 31
@@ -33,9 +37,17 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    buildTypes.each {
+        it.buildConfigField "String", "BASE_URL", "\"" + localProperties['BASE_URL'] + "\""
+    }
 }
 
 dependencies {
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     //kotlin
     implementation 'androidx.core:core-ktx:1.7.0'

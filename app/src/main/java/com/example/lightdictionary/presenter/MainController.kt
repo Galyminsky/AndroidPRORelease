@@ -1,10 +1,10 @@
 package com.example.lightdictionary.presenter
 
-import com.example.lightdictionary.data.WordEntity
-
 class MainController {
     interface View {
         fun showSearchInputScreen()
+        fun showError(s: String)
+        abstract fun showWord(s: String)
     }
 
     interface Presenter {
@@ -15,6 +15,6 @@ class MainController {
     }
 
     interface Interactor {
-        fun getData(word: String) : WordEntity
+        fun getData(src: String)
     }
 }

@@ -19,6 +19,13 @@
         android:tintMode="@color/white"
         />
 
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/words_recycler_view"
         android:layout_width="match_parent"
