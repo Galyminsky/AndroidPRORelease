@@ -16,7 +16,7 @@ class MainPresenter(service: WordRetrofitService) : MainController.Presenter {
         override fun onResponse(call: Call<List<WordEntity>>, response: Response<List<WordEntity>>) {
             val words: List<WordEntity>? = response.body()
             if (response.isSuccessful && words != null) {
-                words[0].meanings?.get(0)?.translation?.text?.let { view?.showWord(it) }
+                view?.showWords(words)
             } else {
                 view?.showError("SERVER_ERROR")
             }

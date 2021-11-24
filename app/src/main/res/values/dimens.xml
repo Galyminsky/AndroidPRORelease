@@ -2,4 +2,6 @@
 <resources>
     <dimen name="search_fab_margin">30dp</dimen>
     <dimen name="search_input_fragment_height">200dp</dimen>
+    <dimen name="item_word_main_margin">8dp</dimen>
+    <dimen name="item_word_main_text_view_padding">8dp</dimen>
 </resources>
