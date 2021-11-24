@@ -1,12 +1,15 @@
 package com.example.lightdictionary.presenter
 
+import com.example.lightdictionary.data.LoadWordsState
 import com.example.lightdictionary.data.WordEntity
+import io.reactivex.Observable
 
 class MainController {
     interface View {
         fun showSearchInputScreen()
         fun showError(s: String)
         fun showWords(words: List<WordEntity>)
+        fun showLoading(isLoading: Boolean)
     }
 
     interface Presenter {
@@ -17,6 +20,6 @@ class MainController {
     }
 
     interface Interactor {
-        fun getData(src: String)
+        fun getData(src: String): Observable<LoadWordsState>
     }
 }

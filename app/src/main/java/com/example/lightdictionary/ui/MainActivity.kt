@@ -2,6 +2,7 @@ package com.example.lightdictionary.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -16,7 +17,7 @@ private const val SEARCH_INPUT_FRAGMENT_TAG = "SEARCH_INPUT_FRAGMENT_TAG"
 
 class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragment.Controller {
     private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::bind)
-    private val presenter: MainController.Presenter by lazy { MainPresenter(app.retrofitService) }
+    private val presenter: MainController.Presenter by lazy { MainPresenter(app.mainInteractor) }
     private val adapter: MainAdapter by lazy { MainAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +48,13 @@ class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragme
 
     override fun showWords(words: List<WordEntity>) {
         adapter.updateList(words)
+    }
+
+    override fun showLoading(isLoading: Boolean) {
+        binding.progressLayout.visibility = when (isLoading) {
+            true -> View.VISIBLE
+            false -> View.GONE
+        }
     }
 
     override fun setNewWord(word: String) {

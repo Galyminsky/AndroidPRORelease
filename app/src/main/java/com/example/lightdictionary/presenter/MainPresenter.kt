@@ -1,41 +1,22 @@
 package com.example.lightdictionary.presenter
 
-import android.util.Log
-import com.example.lightdictionary.data.WordEntity
-import com.example.lightdictionary.domain.WordRepo
-import com.example.lightdictionary.domain.WordRepoRetrofitImpl
-import com.example.lightdictionary.domain.WordRetrofitService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.lightdictionary.data.LoadWordsState
+import com.example.lightdictionary.data.LoadWordsState.Error
+import com.example.lightdictionary.data.LoadWordsState.Success
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
-class MainPresenter(service: WordRetrofitService) : MainController.Presenter {
+class MainPresenter(private val interactor: MainController.Interactor) : MainController.Presenter {
     private var view: MainController.View? = null
-
-    private val callback = object : Callback<List<WordEntity>> {
-        override fun onResponse(call: Call<List<WordEntity>>, response: Response<List<WordEntity>>) {
-            val words: List<WordEntity>? = response.body()
-            if (response.isSuccessful && words != null) {
-                view?.showWords(words)
-            } else {
-                view?.showError("SERVER_ERROR")
-            }
-
-        }
-
-        override fun onFailure(call: Call<List<WordEntity>>, t: Throwable) {
-            Log.d("@@@ onFailure", t.message.toString())
-        }
-    }
-
-    private val wordRepo: WordRepo by lazy { WordRepoRetrofitImpl(service, callback) }
-    private val interactor: MainController.Interactor by lazy { MainInteractor(wordRepo) }
+    private val disposable = CompositeDisposable()
 
     override fun attachView(view: MainController.View) {
         this.view = view
     }
 
     override fun detachView() {
+        disposable.clear()
         this.view = null
     }
 
@@ -44,6 +25,27 @@ class MainPresenter(service: WordRetrofitService) : MainController.Presenter {
     }
 
     override fun onGetInputWord(word: String) {
-        interactor.getData(word)
+        disposable.add(
+            interactor.getData(word)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe { view?.showLoading(true) }
+                .subscribe { state -> doOnSuccessLoading(state) }
+        )
+    }
+
+    private fun doOnSuccessLoading(state: LoadWordsState) {
+        when (state) {
+            is Success -> {
+                view?.showLoading(false)
+                view?.showWords(state.words)
+            }
+            is Error -> {
+                view?.showLoading(false)
+                state.error.localizedMessage?.let {
+                    view?.showError(it)
+                }
+            }
+        }
     }
 }

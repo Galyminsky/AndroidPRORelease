@@ -1,13 +1,8 @@
 package com.example.lightdictionary.domain
 
 import com.example.lightdictionary.data.WordEntity
-import retrofit2.Callback
+import io.reactivex.Single
 
-class WordRepoRetrofitImpl(
-    private val service: WordRetrofitService,
-    private val callback: Callback<List<WordEntity>>
-) : WordRepo {
-    override fun getWord(src: String) {
-        service.getWord(src).enqueue(callback)
-    }
+class WordRepoRetrofitImpl(private val service: WordRetrofitService) : WordRepo {
+    override fun getWord(src: String): Single<List<WordEntity>> = service.getWord(src)
 }
