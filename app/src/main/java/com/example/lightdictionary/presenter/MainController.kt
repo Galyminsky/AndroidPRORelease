@@ -24,7 +24,6 @@ class MainController {
     ) : ViewModel() {
         abstract fun onSearchClicked()
         abstract fun onGetInputWord(word: String)
-        abstract fun initViewModel(interactor: Interactor)
         abstract fun onSearchScreenOpened()
     }
 }
