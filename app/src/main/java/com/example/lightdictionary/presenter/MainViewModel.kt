@@ -4,9 +4,8 @@ import com.example.lightdictionary.data.LoadWordsState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val interactor: MainInteractor) : MainController.BaseViewModel() {
+class MainViewModel(private val interactor: MainController.Interactor) : MainController.BaseViewModel() {
     private val disposable = CompositeDisposable()
 
     override fun onSearchScreenOpened() {

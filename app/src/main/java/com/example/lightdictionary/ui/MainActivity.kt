@@ -4,34 +4,25 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.lightdictionary.App
 import com.example.lightdictionary.R
 import com.example.lightdictionary.data.LoadWordsState
 import com.example.lightdictionary.data.WordEntity
 import com.example.lightdictionary.databinding.ActivityMainBinding
 import com.example.lightdictionary.presenter.MainController
-import com.example.lightdictionary.presenter.MainViewModel
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val SEARCH_INPUT_FRAGMENT_TAG = "SEARCH_INPUT_FRAGMENT_TAG"
 
 class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragment.Controller {
     private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::bind)
-    private val model: MainViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-    }
+    private val model: MainController.BaseViewModel by viewModel()
     private val adapter: MainAdapter by lazy { MainAdapter() }
-
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        App.daggerComponent.inject(this)
 
         model.searchLiveData.observe(this) {
             if (it) {
