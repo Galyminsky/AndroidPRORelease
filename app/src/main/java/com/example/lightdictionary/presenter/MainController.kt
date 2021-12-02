@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.lightdictionary.data.LoadWordsState
-import io.reactivex.Observable
 
 class MainController {
     interface View {
@@ -13,7 +12,7 @@ class MainController {
     }
 
     interface Interactor {
-        fun getData(src: String): Observable<LoadWordsState>
+        suspend fun getData(src: String): LoadWordsState
     }
 
     abstract class BaseViewModel(
