@@ -1,20 +1,14 @@
 package com.example.lightdictionary.presenter
 
+import androidx.lifecycle.viewModelScope
 import com.example.lightdictionary.data.LoadWordsState
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 
 class MainViewModel(private val interactor: MainController.Interactor) : MainController.BaseViewModel() {
 
-    private val coroutineScope = CoroutineScope(
-        Dispatchers.Main
-                + SupervisorJob()
-                + CoroutineExceptionHandler { _, throwable ->
-            loadStateLiveDataMutable.postValue(LoadWordsState.Error(throwable))
-        })
-
-    override fun onCleared() {
-        coroutineScope.coroutineContext.cancelChildren()
-        super.onCleared()
+    private val coroutineScope = viewModelScope + CoroutineExceptionHandler { _, throwable ->
+        loadStateLiveDataMutable.postValue(LoadWordsState.Error(throwable))
     }
 
     override fun onSearchScreenOpened() {
@@ -29,7 +23,9 @@ class MainViewModel(private val interactor: MainController.Interactor) : MainCon
         loadStateLiveDataMutable.value = LoadWordsState.Loading
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
-                loadStateLiveDataMutable.postValue(interactor.getData(word))
+                interactor.getData(word).collect {
+                    loadStateLiveDataMutable.postValue(it)
+                }
             }
         }
     }

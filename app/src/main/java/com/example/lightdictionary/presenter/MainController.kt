@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.lightdictionary.data.LoadWordsState
+import kotlinx.coroutines.flow.StateFlow
 
 class MainController {
     interface View {
@@ -12,7 +13,7 @@ class MainController {
     }
 
     interface Interactor {
-        suspend fun getData(src: String): LoadWordsState
+        suspend fun getData(src: String): StateFlow<LoadWordsState>
     }
 
     abstract class BaseViewModel(
