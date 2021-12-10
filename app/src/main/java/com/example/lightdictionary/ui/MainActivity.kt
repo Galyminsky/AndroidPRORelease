@@ -18,24 +18,35 @@ private const val SEARCH_INPUT_FRAGMENT_TAG = "SEARCH_INPUT_FRAGMENT_TAG"
 class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragment.Controller {
     private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::bind)
     private val model: MainController.BaseViewModel by viewModel()
-    private val adapter: MainAdapter by lazy { MainAdapter() }
+    private val adapter: MainAdapter by lazy { MainAdapter(::onItemClicked) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        model.searchLiveData.observe(this) {
-            if (it) {
-                showSearchInputScreen()
-                model.onSearchScreenOpened()
-            }
-        }
+        model.searchLiveData.observe(this) { renderSearchData(it) }
         model.loadStateLiveData.observe(this) { renderLoadState(it) }
+        model.detailLiveData.observe(this) { renderDetailData(it) }
 
         binding.wordsRecyclerView.adapter = adapter
         binding.wordsRecyclerView.layoutManager = LinearLayoutManager(this)
 
         binding.searchFab.setOnClickListener { model.onSearchClicked() }
+    }
+
+    override fun renderSearchData(state: Boolean) {
+        if (state) {
+            showSearchInputScreen()
+            model.onSearchScreenOpened()
+        }
+    }
+
+    override fun renderDetailData(word: WordEntity?) {
+        if (word != null) {
+            showDetailScreen(word)
+            model.onDetailScreenOpened()
+            binding.searchFab.hide()
+        }
     }
 
     override fun renderLoadState(state: LoadWordsState) {
@@ -55,8 +66,20 @@ class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragme
         }
     }
 
-    override fun showSearchInputScreen() {
+    private fun showSearchInputScreen() {
         SearchInputFragment.newInstance().show(supportFragmentManager, SEARCH_INPUT_FRAGMENT_TAG)
+    }
+
+    private fun showDetailScreen(word: WordEntity) {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_container, DetailFragment.newInstance(word))
+            .addToBackStack(null)
+            .commit()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        binding.searchFab.show()
     }
 
     private fun showError(s: String) {
@@ -77,4 +100,8 @@ class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragme
     override fun setNewWord(word: String) {
         model.onGetInputWord(word)
     }
+
+     private fun onItemClicked(word: WordEntity) {
+         model.onRecycleItemClicked(word)
+     }
 }

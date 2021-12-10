@@ -15,4 +15,5 @@
     <color name="green_800">#2e7d32</color>
     <color name="green_800_dark">#005005</color>
     <color name="green_800_light">#60ad5e</color>
+    <color name="grey_800">#424242</color>
 </resources>

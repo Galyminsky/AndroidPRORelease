@@ -4,4 +4,8 @@
     <dimen name="search_input_fragment_height">200dp</dimen>
     <dimen name="item_word_main_margin">8dp</dimen>
     <dimen name="item_word_main_text_view_padding">8dp</dimen>
+    <dimen name="detail_root_margin">8dp</dimen>
+    <dimen name="detail_word_text_size">28sp</dimen>
+    <dimen name="item_detail_text_view_padding">8dp</dimen>
+    <dimen name="item_detail_card_height">120dp</dimen>
 </resources>

@@ -2,6 +2,7 @@ package com.example.lightdictionary.presenter
 
 import androidx.lifecycle.viewModelScope
 import com.example.lightdictionary.data.LoadWordsState
+import com.example.lightdictionary.data.WordEntity
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 
@@ -13,6 +14,14 @@ class MainViewModel(private val interactor: MainController.Interactor) : MainCon
 
     override fun onSearchScreenOpened() {
         searchLiveDataMutable.value = false
+    }
+
+    override fun onRecycleItemClicked(word: WordEntity) {
+        detailLiveDataMutable.value = word
+    }
+
+    override fun onDetailScreenOpened() {
+        detailLiveDataMutable.value = null
     }
 
     override fun onSearchClicked() {
