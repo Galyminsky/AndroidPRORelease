@@ -23,6 +23,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding.detailMeaningsRecycleView.adapter = adapter
         binding.detailMeaningsRecycleView.layoutManager = LinearLayoutManager(requireContext())
         adapter.updateList(wordEntity.meanings)
+
+        binding.detailSwipeRefreshLayout.setOnRefreshListener { refreshRecyclerAdapter(wordEntity) }
     }
 
     companion object {
@@ -34,5 +36,12 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     putParcelable(ARG_WORD_PARAM, word)
                 }
             }
+    }
+
+    private fun refreshRecyclerAdapter(wordEntity: WordEntity) {
+        adapter.updateList(wordEntity.meanings)
+        if (binding.detailSwipeRefreshLayout.isRefreshing) {
+            binding.detailSwipeRefreshLayout.isRefreshing = false
+        }
     }
 }
