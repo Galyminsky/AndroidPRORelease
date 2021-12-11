@@ -1,7 +1,10 @@
 package com.example.lightdictionary.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +35,21 @@ class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragme
         binding.wordsRecyclerView.layoutManager = LinearLayoutManager(this)
 
         binding.searchFab.setOnClickListener { model.onSearchClicked() }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_app_bar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.app_bar_history -> {
+                startActivity(Intent(this, HistoryActivity::class.java))
+                true
+            }
+            else -> false
+        }
     }
 
     override fun renderSearchData(state: Boolean) {

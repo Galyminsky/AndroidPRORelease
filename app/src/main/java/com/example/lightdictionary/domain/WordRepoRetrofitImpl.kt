@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 
 class WordRepoRetrofitImpl(private val service: WordRetrofitService) : LoadingWordsRepo {
-    override suspend fun getWord(src: String): Flow<List<WordEntity>> {
+    override suspend fun getWord(src: String?): Flow<List<WordEntity>> {
         return flow {
-            emit (safeApiCall { service.getWord(src) })
+            emit (safeApiCall { service.getWord(src!!) })
         }.flowOn(Dispatchers.IO)
     }
 

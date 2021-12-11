@@ -1,25 +1,16 @@
 package com.example.lightdictionary.database
 
-import androidx.room.*
-import com.example.lightdictionary.data.WordEntity
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.example.lightdictionary.data.HistoryEntity
 
 @Dao
 interface HistoryDao {
     @Query("SELECT * FROM words")
-    suspend fun getAllWords(): List<WordEntity>
-
-    @Query("SELECT * FROM words WHERE text LIKE :word")
-    suspend fun getDataByWord(word: String): WordEntity
+    fun getAllWords(): List<HistoryEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun saveWord(entity: WordEntity)
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun saveWords(entities: List<WordEntity>)
-
-    @Update
-    suspend fun updateWord(entity: WordEntity)
-
-    @Delete
-    suspend fun deleteWord(entity: WordEntity)
+    fun saveWord(entity: HistoryEntity)
 }

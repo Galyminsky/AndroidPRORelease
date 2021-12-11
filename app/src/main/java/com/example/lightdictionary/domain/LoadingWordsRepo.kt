@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 interface LoadingWordsRepo {
-    suspend fun getWord(src: String) : Flow<List<WordEntity>>
+    suspend fun getWord(src: String?) : Flow<List<WordEntity>>
 }

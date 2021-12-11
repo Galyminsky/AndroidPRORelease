@@ -5,9 +5,10 @@ import com.example.lightdictionary.BuildConfig
 import com.example.lightdictionary.database.HistoryDao
 import com.example.lightdictionary.database.HistoryDatabase
 import com.example.lightdictionary.domain.*
-import com.example.lightdictionary.presenter.MainController
-import com.example.lightdictionary.presenter.MainInteractor
-import com.example.lightdictionary.presenter.MainViewModel
+import com.example.lightdictionary.presenter.*
+import com.example.lightdictionary.presenter.history.HistoryController
+import com.example.lightdictionary.presenter.history.HistoryInteractor
+import com.example.lightdictionary.presenter.history.HistoryViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -32,11 +33,16 @@ val retrofitModule = module {
 val viewModelModule = module {
     factory<MainController.Interactor> { MainInteractor(get<LoadingWordsRepo>(named(RETROFIT))) }
     factory<MainController.BaseViewModel> { MainViewModel(get<MainController.Interactor>()) }
+
+    factory<HistoryController.Interactor> { HistoryInteractor(get<LoadingWordsRepo>(named(ROOM))) }
+    factory<HistoryController.BaseViewModel> { HistoryViewModel(get<HistoryController.Interactor>()) }
 }
 
 val databaseModule = module {
     single<HistoryDatabase> {
-        Room.databaseBuilder(get(), HistoryDatabase::class.java, "history.db").build()
+        Room.databaseBuilder(get(), HistoryDatabase::class.java, "history.db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
     single<HistoryDao> { get<HistoryDatabase>().historyDao() }
     single<LoadingWordsRepo>(named(ROOM)) { WordRepoRoomImpl(get<HistoryDao>()) }

@@ -3,4 +3,5 @@
 
     <string name="search_button_text">Search</string>
     <string name="search_input_layout_hint">Input new word</string>
+    <string name="app_bar_history_title">History</string>
 </resources>
