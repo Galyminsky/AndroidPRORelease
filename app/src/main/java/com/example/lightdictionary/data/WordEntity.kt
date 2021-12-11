@@ -12,10 +12,13 @@ data class WordEntity(
 @Parcelize
 data class MeaningsEntity(
     val translation: TranslationEntity = TranslationEntity(),
-    val imageUrl: String = ""
+    val imageUrl: String = "",
+    val transcription: String = "",
+    val soundUrl: String? = null
 ) : Parcelable
 
 @Parcelize
 data class TranslationEntity(
-    val text: String = ""
+    val text: String = "",
+    val note: String? = ""
 ) : Parcelable

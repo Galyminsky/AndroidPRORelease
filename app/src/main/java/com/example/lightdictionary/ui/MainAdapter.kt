@@ -31,14 +31,11 @@ class MainViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     fun bind(word: WordEntity, onListItemClick: (WordEntity) -> Unit) {
         binding.itemWordMainMeaningTextView.text = word.text
 
-        val sb = StringBuilder()
-        for (translation in word.meanings) {
-            sb.append(translation.translation.text)
-            if (translation != word.meanings.last()) {
-                sb.append(" / ")
-            }
-        }
-        binding.itemWordMainTranslationTextView.text = sb.toString()
+        val meanings: String = word.meanings.joinToString(
+            separator = " / ",
+            transform = { meaningsEntity -> meaningsEntity.translation.text }
+        )
+        binding.itemWordMainTranslationTextView.text = meanings
         binding.root.setOnClickListener { onListItemClick(word) }
     }
 }
