@@ -4,13 +4,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.lightdictionary.data.HistoryEntity
+import com.example.lightdictionary.data.WordEntity
 
 @Dao
 interface HistoryDao {
     @Query("SELECT * FROM words")
-    fun getAllWords(): List<HistoryEntity>
+    fun getAllWords(): List<WordEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun saveWord(entity: HistoryEntity)
+    fun saveWord(entity: WordEntity)
 }

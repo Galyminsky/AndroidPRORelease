@@ -16,7 +16,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val wordEntity: WordEntity = arguments?.getParcelable(ARG_WORD_PARAM) ?: WordEntity()
+        val wordEntity: WordEntity =
+            arguments?.getParcelable(ARG_WORD_PARAM) ?: WordEntity("", emptyList())
 
         binding.detailWordTextView.text = wordEntity.text
 

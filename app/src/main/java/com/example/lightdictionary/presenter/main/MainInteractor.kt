@@ -28,15 +28,6 @@ class MainInteractor(
     }
 
     override suspend fun saveData(word: WordEntity) {
-        savingRepo.saveWord(
-            HistoryEntity(
-                word.text,
-                word.meanings[0].translation.text,
-                word.meanings[0].translation.note,
-                word.meanings[0].imageUrl,
-                word.meanings[0].transcription,
-                word.meanings[0].soundUrl
-            )
-        )
+        savingRepo.saveWord(word)
     }
 }
