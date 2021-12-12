@@ -1,4 +1,4 @@
-package com.example.lightdictionary.presenter
+package com.example.lightdictionary.presenter.main
 
 import androidx.lifecycle.viewModelScope
 import com.example.lightdictionary.data.LoadWordsState
@@ -18,6 +18,9 @@ class MainViewModel(private val interactor: MainController.Interactor) : MainCon
 
     override fun onRecycleItemClicked(word: WordEntity) {
         detailLiveDataMutable.value = word
+        coroutineScope.launch {
+            withContext(Dispatchers.IO) { interactor.saveData(word) }
+        }
     }
 
     override fun onDetailScreenOpened() {

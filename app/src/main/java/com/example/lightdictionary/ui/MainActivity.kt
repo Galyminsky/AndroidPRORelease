@@ -13,7 +13,7 @@ import com.example.lightdictionary.R
 import com.example.lightdictionary.data.LoadWordsState
 import com.example.lightdictionary.data.WordEntity
 import com.example.lightdictionary.databinding.ActivityMainBinding
-import com.example.lightdictionary.presenter.MainController
+import com.example.lightdictionary.presenter.main.MainController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val SEARCH_INPUT_FRAGMENT_TAG = "SEARCH_INPUT_FRAGMENT_TAG"

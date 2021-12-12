@@ -30,16 +30,7 @@ class WordRepoRoomImpl(private val dao: HistoryDao) : LoadingWordsRepo, SavingWo
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun saveWord(word: WordEntity) {
-        dao.saveWord(
-            HistoryEntity(
-                word.text,
-                word.meanings[0].translation.text,
-                word.meanings[0].translation.note,
-                word.meanings[0].imageUrl,
-                word.meanings[0].transcription,
-                word.meanings[0].soundUrl
-            )
-        )
+    override suspend fun saveWord(word: HistoryEntity) {
+        dao.saveWord(word)
     }
 }

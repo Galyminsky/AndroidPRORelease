@@ -5,10 +5,12 @@ import com.example.lightdictionary.BuildConfig
 import com.example.lightdictionary.database.HistoryDao
 import com.example.lightdictionary.database.HistoryDatabase
 import com.example.lightdictionary.domain.*
-import com.example.lightdictionary.presenter.*
 import com.example.lightdictionary.presenter.history.HistoryController
 import com.example.lightdictionary.presenter.history.HistoryInteractor
 import com.example.lightdictionary.presenter.history.HistoryViewModel
+import com.example.lightdictionary.presenter.main.MainController
+import com.example.lightdictionary.presenter.main.MainInteractor
+import com.example.lightdictionary.presenter.main.MainViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -31,7 +33,9 @@ val retrofitModule = module {
 }
 
 val viewModelModule = module {
-    factory<MainController.Interactor> { MainInteractor(get<LoadingWordsRepo>(named(RETROFIT))) }
+    factory<MainController.Interactor> {
+        MainInteractor(get<LoadingWordsRepo>(named(RETROFIT)), get<SavingWordsRepo>(named(ROOM)))
+    }
     factory<MainController.BaseViewModel> { MainViewModel(get<MainController.Interactor>()) }
 
     factory<HistoryController.Interactor> { HistoryInteractor(get<LoadingWordsRepo>(named(ROOM))) }

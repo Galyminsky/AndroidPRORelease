@@ -1,4 +1,4 @@
-package com.example.lightdictionary.presenter
+package com.example.lightdictionary.presenter.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,6 +16,7 @@ class MainController {
 
     interface Interactor {
         suspend fun getData(src: String): StateFlow<LoadWordsState>
+        suspend fun saveData(word: WordEntity)
     }
 
     abstract class BaseViewModel(
