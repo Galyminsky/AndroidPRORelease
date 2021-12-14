@@ -32,7 +32,44 @@ object Versions {
     const val constraint = "2.1.2"
     const val swipe_refresh = "1.1.0"
 
-    const val junit = "4.+"
+    const val junit = "4.12"
     const val junit_ext = "1.1.3"
     const val espresso = "3.4.0"
+}
+
+object Room {
+    const val runtime = "androidx.room:room-runtime:${Versions.room}"
+    const val compiler = "androidx.room:room-compiler:${Versions.room}"
+    const val ktx = "androidx.room:room-ktx:${Versions.room}"
+}
+
+object Koin {
+    const val core = "io.insert-koin:koin-core:${Versions.koin}"
+    const val android = "io.insert-koin:koin-android:${Versions.koin}"
+}
+
+object Retrofit {
+    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    const val gson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    const val coroutines = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.retrofit_coroutines}"
+}
+
+object Kotlin {
+    const val core = "androidx.core:core-ktx:${Versions.ktx_core}"
+    const val fragment = "androidx.fragment:fragment-ktx:${Versions.ktx_fragment}"
+    const val view_binding = "com.github.kirich1409:viewbindingpropertydelegate-noreflection:${Versions.view_binding}"
+}
+
+object Ui {
+    const val swipe_refresh_layout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipe_refresh}"
+    const val app_compat = "androidx.appcompat:appcompat:${Versions.app_compat}"
+    const val material = "com.google.android.material:material:${Versions.material}"
+    const val constraint_layout = "androidx.constraintlayout:constraintlayout:${Versions.constraint}"
+    const val coil = "io.coil-kt:coil:${Versions.coil}"
+}
+
+object Testing {
+    const val junit = "junit:junit:${Versions.junit}"
+    const val junit_ext = "androidx.test.ext:junit:${Versions.junit_ext}"
+    const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
 }

@@ -45,35 +45,35 @@ android {
 
 dependencies {
     //Room
-    implementation "androidx.room:room-runtime:${Versions.room}"
-    kapt "androidx.room:room-compiler:${Versions.room}"
-    implementation "androidx.room:room-ktx:${Versions.room}"
+    implementation Room.runtime
+    kapt Room.compiler
+    implementation Room.ktx
 
     //Coil
-    implementation "io.coil-kt:coil:${Versions.coil}"
+    implementation Ui.coil
 
     //koin
-    implementation "io.insert-koin:koin-core:${Versions.koin}"
-    implementation "io.insert-koin:koin-android:${Versions.koin}"
+    implementation Koin.core
+    implementation Koin.android
 
     //retrofit
-    implementation "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    implementation "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.retrofit_coroutines}"
+    implementation Retrofit.retrofit
+    implementation Retrofit.gson
+    implementation Retrofit.coroutines
 
     //kotlin
-    implementation "androidx.core:core-ktx:${Versions.ktx_core}"
-    implementation "androidx.fragment:fragment-ktx:${Versions.ktx_fragment}"
-    implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:${Versions.view_binding}"
+    implementation Kotlin.core
+    implementation Kotlin.fragment
+    implementation Kotlin.view_binding
 
     //android
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipe_refresh}"
-    implementation "androidx.appcompat:appcompat:${Versions.app_compat}"
-    implementation "com.google.android.material:material:${Versions.material}"
-    implementation "androidx.constraintlayout:constraintlayout:${Versions.constraint}"
+    implementation Ui.app_compat
+    implementation Ui.material
+    implementation Ui.constraint_layout
+    implementation Ui.swipe_refresh_layout
 
     //test
-    testImplementation "junit:junit:${Versions.junit}"
-    androidTestImplementation "androidx.test.ext:junit:${Versions.junit_ext}"
-    androidTestImplementation "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    testImplementation Testing.junit
+    androidTestImplementation Testing.junit_ext
+    androidTestImplementation Testing.espresso
 }
