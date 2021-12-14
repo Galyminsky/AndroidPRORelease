@@ -9,15 +9,14 @@ Properties localProperties = new Properties()
 localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
 
 android {
-    compileSdk 31
+    compileSdk Config.compile_sdk
 
     defaultConfig {
-        applicationId "com.example.lightdictionary"
-        minSdk 23
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
-
+        applicationId Config.application_id
+        minSdk Config.min_sdk
+        targetSdk Config.target_sdk
+        versionCode Releases.version_code
+        versionName Releases.version_name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -28,11 +27,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility Config.java_version
+        targetCompatibility Config.java_version
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = Config.jvm_target
     }
 
     buildFeatures {
