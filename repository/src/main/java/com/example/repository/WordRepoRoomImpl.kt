@@ -1,7 +1,7 @@
-package com.example.lightdictionary.domain
+package com.example.repository
 
 import com.example.model.WordEntity
-import com.example.lightdictionary.database.HistoryDao
+import com.example.repository.room.HistoryDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

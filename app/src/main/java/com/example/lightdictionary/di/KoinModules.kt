@@ -2,15 +2,19 @@ package com.example.lightdictionary.di
 
 import androidx.room.Room
 import com.example.lightdictionary.BuildConfig
-import com.example.lightdictionary.database.HistoryDao
-import com.example.lightdictionary.database.HistoryDatabase
-import com.example.lightdictionary.domain.*
 import com.example.lightdictionary.presenter.history.HistoryController
 import com.example.lightdictionary.presenter.history.HistoryInteractor
 import com.example.lightdictionary.presenter.history.HistoryViewModel
 import com.example.lightdictionary.presenter.main.MainController
 import com.example.lightdictionary.presenter.main.MainInteractor
 import com.example.lightdictionary.presenter.main.MainViewModel
+import com.example.repository.LoadingWordsRepo
+import com.example.repository.SavingWordsRepo
+import com.example.repository.WordRepoRetrofitImpl
+import com.example.repository.WordRepoRoomImpl
+import com.example.repository.retrofit.WordRetrofitService
+import com.example.repository.room.HistoryDao
+import com.example.repository.room.HistoryDatabase
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

@@ -1,6 +1,7 @@
-package com.example.lightdictionary.domain
+package com.example.repository
 
 import com.example.model.WordEntity
+import com.example.repository.retrofit.WordRetrofitService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

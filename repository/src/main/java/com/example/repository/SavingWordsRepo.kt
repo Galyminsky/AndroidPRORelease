@@ -1,4 +1,4 @@
-package com.example.lightdictionary.domain
+package com.example.repository
 
 import com.example.model.WordEntity
 

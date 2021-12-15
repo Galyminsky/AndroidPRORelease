@@ -45,6 +45,7 @@ android {
 dependencies {
     //modules
     implementation project(Modules.model)
+    implementation project(Modules.repository)
 
     //Room
     implementation Room.runtime
