@@ -1,6 +1,6 @@
 package com.example.lightdictionary.domain
 
-import com.example.lightdictionary.data.WordEntity
+import com.example.model.WordEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

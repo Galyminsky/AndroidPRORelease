@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-parcelize'
     id 'kotlin-kapt'
 }
 
@@ -44,10 +43,12 @@ android {
 }
 
 dependencies {
+    //modules
+    implementation project(Modules.model)
+
     //Room
     implementation Room.runtime
     kapt Room.compiler
-    implementation Room.ktx
 
     //Coil
     implementation Ui.coil

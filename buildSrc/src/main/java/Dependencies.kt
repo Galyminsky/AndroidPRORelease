@@ -26,6 +26,7 @@ object Versions {
 
     const val ktx_core = "1.7.0"
     const val ktx_fragment = "1.4.0"
+    const val gson = "2.8.7"
 
     const val app_compat = "1.4.0"
     const val material = "1.4.0"
@@ -58,6 +59,7 @@ object Kotlin {
     const val core = "androidx.core:core-ktx:${Versions.ktx_core}"
     const val fragment = "androidx.fragment:fragment-ktx:${Versions.ktx_fragment}"
     const val view_binding = "com.github.kirich1409:viewbindingpropertydelegate-noreflection:${Versions.view_binding}"
+    const val gson = "com.google.code.gson:gson:${Versions.gson}"
 }
 
 object Ui {
@@ -72,4 +74,9 @@ object Testing {
     const val junit = "junit:junit:${Versions.junit}"
     const val junit_ext = "androidx.test.ext:junit:${Versions.junit_ext}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+}
+
+object Modules {
+    const val app = ":app"
+    const val model = ":model"
 }

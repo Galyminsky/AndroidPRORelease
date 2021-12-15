@@ -1,4 +1,4 @@
-package com.example.lightdictionary.data
+package com.example.model
 
 sealed class LoadWordsState {
     data class Success(var words: List<WordEntity>) : LoadWordsState()

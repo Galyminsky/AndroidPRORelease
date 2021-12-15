@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.lightdictionary.R
-import com.example.lightdictionary.data.WordEntity
+import com.example.model.WordEntity
 import com.example.lightdictionary.databinding.ItemWordMainBinding
 
 class MainAdapter(private var onListItemClick: (WordEntity) -> Unit) : RecyclerView.Adapter<MainViewHolder>() {

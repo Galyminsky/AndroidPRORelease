@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.lightdictionary.data.WordEntity
+import com.example.model.WordEntity
 
 @Dao
 interface HistoryDao {

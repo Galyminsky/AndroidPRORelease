@@ -1,6 +1,6 @@
 package com.example.lightdictionary.domain
 
-import com.example.lightdictionary.data.WordEntity
+import com.example.model.WordEntity
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

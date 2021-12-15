@@ -1,6 +1,6 @@
 package com.example.lightdictionary.presenter.history
 
-import com.example.lightdictionary.data.LoadWordsState
+import com.example.model.LoadWordsState
 import com.example.lightdictionary.domain.LoadingWordsRepo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

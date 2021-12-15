@@ -7,7 +7,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.ImageLoader
 import coil.request.ImageRequest
 import com.example.lightdictionary.R
-import com.example.lightdictionary.data.MeaningsEntity
+import com.example.model.MeaningsEntity
 import com.example.lightdictionary.databinding.ItemDetailMeaningBinding
 import android.media.AudioAttributes
 import android.media.MediaPlayer

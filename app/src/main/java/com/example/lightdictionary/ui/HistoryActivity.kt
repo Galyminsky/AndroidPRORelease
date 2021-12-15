@@ -7,8 +7,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.lightdictionary.R
-import com.example.lightdictionary.data.LoadWordsState
-import com.example.lightdictionary.data.WordEntity
+import com.example.model.LoadWordsState
+import com.example.model.WordEntity
 import com.example.lightdictionary.databinding.ActivityHistoryBinding
 import com.example.lightdictionary.presenter.history.HistoryController
 import org.koin.androidx.viewmodel.ext.android.viewModel

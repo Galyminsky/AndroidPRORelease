@@ -1,8 +1,8 @@
 package com.example.lightdictionary.presenter.history
 
 import androidx.lifecycle.viewModelScope
-import com.example.lightdictionary.data.LoadWordsState
-import com.example.lightdictionary.data.WordEntity
+import com.example.model.LoadWordsState
+import com.example.model.WordEntity
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 
