@@ -1,11 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
 }
-
-Properties localProperties = new Properties()
-localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
 
 android {
     compileSdk Config.compile_sdk
@@ -36,10 +32,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-
-    buildTypes.each {
-        it.buildConfigField "String", "BASE_URL", "\"" + localProperties['BASE_URL'] + "\""
-    }
 }
 
 dependencies {
@@ -47,21 +39,12 @@ dependencies {
     implementation project(Modules.model)
     implementation project(Modules.repository)
 
-    //Room
-    implementation Room.runtime
-    kapt Room.compiler
-
     //Coil
     implementation Ui.coil
 
     //koin
     implementation Koin.core
     implementation Koin.android
-
-    //retrofit
-    implementation Retrofit.retrofit
-    implementation Retrofit.gson
-    implementation Retrofit.coroutines
 
     //kotlin
     implementation Kotlin.core

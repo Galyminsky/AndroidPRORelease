@@ -4,6 +4,9 @@ plugins {
     id 'kotlin-kapt'
 }
 
+Properties localProperties = new Properties()
+localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
+
 android {
     compileSdk 31
 
@@ -30,6 +33,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildTypes.each {
+        it.buildConfigField "String", "BASE_URL", "\"" + localProperties['BASE_URL'] + "\""
+    }
 }
 
 dependencies {
@@ -38,10 +45,15 @@ dependencies {
     //retrofit
     implementation Retrofit.retrofit
     implementation Retrofit.coroutines
+    implementation Retrofit.gson
 
     //Room
     implementation Room.runtime
     kapt Room.compiler
+
+    //koin
+    implementation Koin.core
+    implementation Koin.android
 
     implementation Kotlin.core
 }
