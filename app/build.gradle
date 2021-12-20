@@ -28,10 +28,6 @@ android {
     kotlinOptions {
         jvmTarget = Config.jvm_target
     }
-
-    buildFeatures {
-        viewBinding true
-    }
 }
 
 dependencies {
@@ -49,7 +45,6 @@ dependencies {
     //kotlin
     implementation Kotlin.core
     implementation Kotlin.fragment
-    implementation Kotlin.view_binding
 
     //android
     implementation Ui.app_compat

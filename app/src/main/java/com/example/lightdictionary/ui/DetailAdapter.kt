@@ -3,16 +3,17 @@ package com.example.lightdictionary.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.ImageLoader
 import coil.request.ImageRequest
 import com.example.lightdictionary.R
 import com.example.model.MeaningsEntity
-import com.example.lightdictionary.databinding.ItemDetailMeaningBinding
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import com.example.lightdictionary.utils.concatWithRoundBrackets
 import com.example.lightdictionary.utils.toUrl
+import com.example.lightdictionary.utils.viewById
 
 class DetailAdapter : RecyclerView.Adapter<DetailViewHolder>() {
     private var list: List<MeaningsEntity> = emptyList()
@@ -30,12 +31,15 @@ class DetailAdapter : RecyclerView.Adapter<DetailViewHolder>() {
 class DetailViewHolder(private val parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.item_detail_meaning, parent, false)
 ) {
-    private val binding: ItemDetailMeaningBinding by viewBinding(ItemDetailMeaningBinding::bind)
+    private val itemDetailTranslationTextView by viewById<TextView>(R.id.item_detail_translation_text_view)
+    private val itemDetailTranscriptionTextView by viewById<TextView>(R.id.item_detail_transcription_text_view)
+    private val itemDetailImageView by viewById<AppCompatImageView>(R.id.item_detail_image_view)
+    private val itemDetailSoundButton by viewById<AppCompatImageView>(R.id.item_detail_sound_button)
 
     fun bind(meaning: MeaningsEntity) {
-        binding.itemDetailTranslationTextView.text =
+        itemDetailTranslationTextView.text =
             meaning.translation.text.concatWithRoundBrackets(meaning.translation.note)
-        binding.itemDetailTranscriptionTextView.text = meaning.transcription
+        itemDetailTranscriptionTextView.text = meaning.transcription
 
         loadImage(meaning.imageUrl.toUrl())
         setupSoundButton(meaning.soundUrl.toUrl())
@@ -48,10 +52,10 @@ class DetailViewHolder(private val parent: ViewGroup) : RecyclerView.ViewHolder(
                 .target(
                     onStart = {},
                     onSuccess = { result ->
-                        binding.itemDetailImageView.setImageDrawable(result)
+                        itemDetailImageView.setImageDrawable(result)
                     },
                     onError = {
-                        binding.itemDetailImageView.setImageResource(R.drawable.ic_image_not_supported)
+                        itemDetailImageView.setImageResource(R.drawable.ic_image_not_supported)
                     }
                 )
                 .build()
@@ -69,6 +73,6 @@ class DetailViewHolder(private val parent: ViewGroup) : RecyclerView.ViewHolder(
             setDataSource(url)
             prepare()
         }
-        binding.itemDetailSoundButton.setOnClickListener { mediaPlayer.start() }
+        itemDetailSoundButton.setOnClickListener { mediaPlayer.start() }
     }
 }

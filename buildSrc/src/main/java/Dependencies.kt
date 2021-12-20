@@ -22,8 +22,6 @@ object Versions {
     const val retrofit = "2.9.0"
     const val retrofit_coroutines = "0.9.2"
 
-    const val view_binding = "1.5.2"
-
     const val ktx_core = "1.7.0"
     const val ktx_fragment = "1.4.0"
     const val gson = "2.8.7"
@@ -58,7 +56,6 @@ object Retrofit {
 object Kotlin {
     const val core = "androidx.core:core-ktx:${Versions.ktx_core}"
     const val fragment = "androidx.fragment:fragment-ktx:${Versions.ktx_fragment}"
-    const val view_binding = "com.github.kirich1409:viewbindingpropertydelegate-noreflection:${Versions.view_binding}"
     const val gson = "com.google.code.gson:gson:${Versions.gson}"
 }
 

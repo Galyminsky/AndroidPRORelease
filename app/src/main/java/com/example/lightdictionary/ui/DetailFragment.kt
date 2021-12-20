@@ -2,16 +2,21 @@ package com.example.lightdictionary.ui
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import by.kirich1409.viewbindingdelegate.viewBinding
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.lightdictionary.R
 import com.example.model.WordEntity
-import com.example.lightdictionary.databinding.FragmentDetailBinding
+import com.example.lightdictionary.utils.viewById
 
 class DetailFragment : Fragment(R.layout.fragment_detail) {
-    private val binding: FragmentDetailBinding by viewBinding(FragmentDetailBinding::bind)
     private val adapter: DetailAdapter by lazy { DetailAdapter() }
+
+    private val detailMeaningsRecycleView by viewById<RecyclerView>(R.id.detail_meanings_recycle_view)
+    private val detailSwipeRefreshLayout by viewById<SwipeRefreshLayout>(R.id.detail_swipe_refresh_layout)
+    private val detailWordTextView by viewById<TextView>(R.id.detail_word_text_view)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -19,13 +24,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         val wordEntity: WordEntity =
             arguments?.getParcelable(ARG_WORD_PARAM) ?: WordEntity("", emptyList())
 
-        binding.detailWordTextView.text = wordEntity.text
+        detailWordTextView.text = wordEntity.text
 
-        binding.detailMeaningsRecycleView.adapter = adapter
-        binding.detailMeaningsRecycleView.layoutManager = LinearLayoutManager(requireContext())
+        detailMeaningsRecycleView.adapter = adapter
+        detailMeaningsRecycleView.layoutManager = LinearLayoutManager(requireContext())
         adapter.updateList(wordEntity.meanings)
 
-        binding.detailSwipeRefreshLayout.setOnRefreshListener { refreshRecyclerAdapter(wordEntity) }
+        detailSwipeRefreshLayout.setOnRefreshListener { refreshRecyclerAdapter(wordEntity) }
     }
 
     companion object {
@@ -41,8 +46,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private fun refreshRecyclerAdapter(wordEntity: WordEntity) {
         adapter.updateList(wordEntity.meanings)
-        if (binding.detailSwipeRefreshLayout.isRefreshing) {
-            binding.detailSwipeRefreshLayout.isRefreshing = false
+        if (detailSwipeRefreshLayout.isRefreshing) {
+            detailSwipeRefreshLayout.isRefreshing = false
         }
     }
 }

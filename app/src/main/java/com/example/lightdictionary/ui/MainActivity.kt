@@ -6,14 +6,16 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import by.kirich1409.viewbindingdelegate.viewBinding
+import androidx.recyclerview.widget.RecyclerView
 import com.example.lightdictionary.R
 import com.example.model.LoadWordsState
 import com.example.model.WordEntity
-import com.example.lightdictionary.databinding.ActivityMainBinding
 import com.example.lightdictionary.presenter.main.MainController
+import com.example.lightdictionary.utils.viewById
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.core.component.KoinScopeComponent
 import org.koin.core.component.getOrCreateScope
 import org.koin.core.scope.Scope
@@ -21,12 +23,15 @@ import org.koin.core.scope.Scope
 private const val SEARCH_INPUT_FRAGMENT_TAG = "SEARCH_INPUT_FRAGMENT_TAG"
 
 class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragment.Controller, KoinScopeComponent {
-    private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::bind)
     private val adapter: MainAdapter by lazy { MainAdapter(::onItemClicked) }
 
     override val scope: Scope
         get() = getOrCreateScope().value
     private val model = scope.get<MainController.BaseViewModel>()
+
+    private val wordsRecyclerView by viewById<RecyclerView>(R.id.words_recycler_view)
+    private val searchFab by viewById<FloatingActionButton>(R.id.search_fab)
+    private val progressLayout by viewById<FrameLayout>(R.id.progress_layout)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +41,10 @@ class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragme
         model.loadStateLiveData.observe(this) { renderLoadState(it) }
         model.detailLiveData.observe(this) { renderDetailData(it) }
 
-        binding.wordsRecyclerView.adapter = adapter
-        binding.wordsRecyclerView.layoutManager = LinearLayoutManager(this)
+        wordsRecyclerView.adapter = adapter
+        wordsRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        binding.searchFab.setOnClickListener { model.onSearchClicked() }
+        searchFab.setOnClickListener { model.onSearchClicked() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -68,7 +73,7 @@ class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragme
         if (word != null) {
             showDetailScreen(word)
             model.onDetailScreenOpened()
-            binding.searchFab.hide()
+            searchFab.hide()
         }
     }
 
@@ -102,7 +107,7 @@ class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragme
 
     override fun onBackPressed() {
         super.onBackPressed()
-        binding.searchFab.show()
+        searchFab.show()
     }
 
     private fun showError(s: String) {
@@ -114,7 +119,7 @@ class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragme
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressLayout.visibility = when (isLoading) {
+        progressLayout.visibility = when (isLoading) {
             true -> View.VISIBLE
             false -> View.GONE
         }

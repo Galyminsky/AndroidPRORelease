@@ -3,25 +3,28 @@ package com.example.lightdictionary.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import by.kirich1409.viewbindingdelegate.viewBinding
+import androidx.recyclerview.widget.RecyclerView
 import com.example.lightdictionary.R
 import com.example.model.LoadWordsState
 import com.example.model.WordEntity
-import com.example.lightdictionary.databinding.ActivityHistoryBinding
 import com.example.lightdictionary.presenter.history.HistoryController
+import com.example.lightdictionary.utils.viewById
 import org.koin.core.component.KoinScopeComponent
 import org.koin.core.component.getOrCreateScope
 import org.koin.core.scope.Scope
 
 class HistoryActivity : AppCompatActivity(), HistoryController.View, KoinScopeComponent {
-    private val binding: ActivityHistoryBinding by viewBinding(ActivityHistoryBinding::bind)
     private val adapter: MainAdapter by lazy { MainAdapter(::onItemClicked) }
 
     override val scope: Scope
         get() = getOrCreateScope().value
     private val model = scope.get<HistoryController.BaseViewModel>()
+
+    private val historyWordsRecyclerView by viewById<RecyclerView>(R.id.history_words_recycler_view)
+    private val historyProgressLayout by viewById<FrameLayout>(R.id.history_progress_layout)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +33,8 @@ class HistoryActivity : AppCompatActivity(), HistoryController.View, KoinScopeCo
         model.loadStateLiveData.observe(this) { renderLoadState(it) }
         model.detailLiveData.observe(this) { renderDetailData(it) }
 
-        binding.historyWordsRecyclerView .adapter = adapter
-        binding.historyWordsRecyclerView.layoutManager = LinearLayoutManager(this)
+        historyWordsRecyclerView .adapter = adapter
+        historyWordsRecyclerView.layoutManager = LinearLayoutManager(this)
 
         model.onViewCreated()
     }
@@ -76,7 +79,7 @@ class HistoryActivity : AppCompatActivity(), HistoryController.View, KoinScopeCo
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.historyProgressLayout.visibility = when (isLoading) {
+        historyProgressLayout.visibility = when (isLoading) {
             true -> View.VISIBLE
             false -> View.GONE
         }
