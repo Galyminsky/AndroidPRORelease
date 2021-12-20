@@ -11,12 +11,17 @@ import com.example.model.LoadWordsState
 import com.example.model.WordEntity
 import com.example.lightdictionary.databinding.ActivityHistoryBinding
 import com.example.lightdictionary.presenter.history.HistoryController
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinScopeComponent
+import org.koin.core.component.getOrCreateScope
+import org.koin.core.scope.Scope
 
-class HistoryActivity : AppCompatActivity(), HistoryController.View {
+class HistoryActivity : AppCompatActivity(), HistoryController.View, KoinScopeComponent {
     private val binding: ActivityHistoryBinding by viewBinding(ActivityHistoryBinding::bind)
-    private val model: HistoryController.BaseViewModel by viewModel()
     private val adapter: MainAdapter by lazy { MainAdapter(::onItemClicked) }
+
+    override val scope: Scope
+        get() = getOrCreateScope().value
+    private val model = scope.get<HistoryController.BaseViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,5 +84,10 @@ class HistoryActivity : AppCompatActivity(), HistoryController.View {
 
     private fun onItemClicked(word: WordEntity) {
         model.onRecycleItemClicked(word)
+    }
+
+    override fun onDestroy() {
+        scope.close()
+        super.onDestroy()
     }
 }

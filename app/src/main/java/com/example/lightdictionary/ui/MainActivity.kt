@@ -14,14 +14,19 @@ import com.example.model.LoadWordsState
 import com.example.model.WordEntity
 import com.example.lightdictionary.databinding.ActivityMainBinding
 import com.example.lightdictionary.presenter.main.MainController
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinScopeComponent
+import org.koin.core.component.getOrCreateScope
+import org.koin.core.scope.Scope
 
 private const val SEARCH_INPUT_FRAGMENT_TAG = "SEARCH_INPUT_FRAGMENT_TAG"
 
-class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragment.Controller {
+class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragment.Controller, KoinScopeComponent {
     private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::bind)
-    private val model: MainController.BaseViewModel by viewModel()
     private val adapter: MainAdapter by lazy { MainAdapter(::onItemClicked) }
+
+    override val scope: Scope
+        get() = getOrCreateScope().value
+    private val model = scope.get<MainController.BaseViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,4 +127,9 @@ class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragme
      private fun onItemClicked(word: WordEntity) {
          model.onRecycleItemClicked(word)
      }
+
+    override fun onDestroy() {
+        scope.close()
+        super.onDestroy()
+    }
 }
