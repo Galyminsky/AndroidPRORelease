@@ -1,13 +1,20 @@
 package com.example.lightdictionary.ui
 
+import android.animation.ObjectAnimator
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewTreeObserver
+import android.view.animation.AnticipateInterpolator
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.animation.doOnEnd
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lightdictionary.R
@@ -21,6 +28,9 @@ import org.koin.core.component.getOrCreateScope
 import org.koin.core.scope.Scope
 
 private const val SEARCH_INPUT_FRAGMENT_TAG = "SEARCH_INPUT_FRAGMENT_TAG"
+private const val SPLASH_SCREEN_COUNTDOWN_DURATION = 2000L
+private const val SPLASH_SCREEN_COUNTDOWN_INTERVAL = 1000L
+private const val SPLASH_SCREEN_SLIDE_LEFT_DURATION = 1000L
 
 class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragment.Controller, KoinScopeComponent {
     private val adapter: MainAdapter by lazy { MainAdapter(::onItemClicked) }
@@ -45,6 +55,11 @@ class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragme
         wordsRecyclerView.layoutManager = LinearLayoutManager(this)
 
         searchFab.setOnClickListener { model.onSearchClicked() }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            setSplashScreenAnimation()
+            setSplashScreenDuration()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -136,5 +151,50 @@ class MainActivity : AppCompatActivity(), MainController.View, SearchInputFragme
     override fun onDestroy() {
         scope.close()
         super.onDestroy()
+    }
+
+    private fun setSplashScreenDuration() {
+        var isHideSplashScreen = false
+
+        object : CountDownTimer(SPLASH_SCREEN_COUNTDOWN_DURATION, SPLASH_SCREEN_COUNTDOWN_INTERVAL) {
+            override fun onTick(millisUntilFinished: Long) {}
+            override fun onFinish() {
+                isHideSplashScreen = true
+            }
+        }.start()
+
+        val content: View by viewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if (isHideSplashScreen) {
+                        content.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else {
+                        false
+                    }
+                }
+            }
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    private fun setSplashScreenAnimation() {
+        splashScreen.setOnExitAnimationListener { splashScreenView ->
+            ObjectAnimator.ofFloat(
+                splashScreenView,
+                View.TRANSLATION_X,
+                0f,
+                -splashScreenView.width.toFloat()
+            ).apply {
+                interpolator = AnticipateInterpolator()
+                duration = SPLASH_SCREEN_SLIDE_LEFT_DURATION
+                doOnEnd {
+                    this@MainActivity.recreate()
+                    splashScreenView.remove()
+                }
+                start()
+            }
+        }
     }
 }
