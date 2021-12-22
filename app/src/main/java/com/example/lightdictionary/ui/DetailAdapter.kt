@@ -15,7 +15,7 @@ import com.example.lightdictionary.utils.concatWithRoundBrackets
 import com.example.lightdictionary.utils.toUrl
 import com.example.lightdictionary.utils.viewById
 
-class DetailAdapter : RecyclerView.Adapter<DetailViewHolder>() {
+class DetailAdapter(private var onListItemClick: (String) -> Unit) : RecyclerView.Adapter<DetailViewHolder>() {
     private var list: List<MeaningsEntity> = emptyList()
 
     fun updateList(list: List<MeaningsEntity>) {
@@ -24,7 +24,7 @@ class DetailAdapter : RecyclerView.Adapter<DetailViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DetailViewHolder(parent)
-    override fun onBindViewHolder(holder: DetailViewHolder, position: Int) = holder.bind(list[position])
+    override fun onBindViewHolder(holder: DetailViewHolder, position: Int) = holder.bind(list[position], onListItemClick)
     override fun getItemCount() = list.size
 }
 
@@ -36,12 +36,13 @@ class DetailViewHolder(private val parent: ViewGroup) : RecyclerView.ViewHolder(
     private val itemDetailImageView by viewById<AppCompatImageView>(R.id.item_detail_image_view)
     private val itemDetailSoundButton by viewById<AppCompatImageView>(R.id.item_detail_sound_button)
 
-    fun bind(meaning: MeaningsEntity) {
+    fun bind(meaning: MeaningsEntity, onListItemClick: (String) -> Unit) {
         itemDetailTranslationTextView.text =
             meaning.translation.text.concatWithRoundBrackets(meaning.translation.note)
         itemDetailTranscriptionTextView.text = meaning.transcription
 
         loadImage(meaning.imageUrl.toUrl())
+        itemDetailImageView.setOnClickListener { onListItemClick(meaning.imageUrl.toUrl()) }
         setupSoundButton(meaning.soundUrl.toUrl())
     }
 

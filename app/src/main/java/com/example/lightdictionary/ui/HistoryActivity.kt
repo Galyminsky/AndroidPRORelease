@@ -16,6 +16,8 @@ import org.koin.core.component.KoinScopeComponent
 import org.koin.core.component.getOrCreateScope
 import org.koin.core.scope.Scope
 
+private const val DETAIL_FRAGMENT_TAG = "Detail fragment"
+
 class HistoryActivity : AppCompatActivity(), HistoryController.View, KoinScopeComponent {
     private val adapter: MainAdapter by lazy { MainAdapter(::onItemClicked) }
 
@@ -65,7 +67,7 @@ class HistoryActivity : AppCompatActivity(), HistoryController.View, KoinScopeCo
 
     private fun showDetailScreen(word: WordEntity) {
         supportFragmentManager.beginTransaction()
-            .add(R.id.history_container, DetailFragment.newInstance(word))
+            .add(R.id.history_container, DetailFragment.newInstance(word), DETAIL_FRAGMENT_TAG)
             .addToBackStack(null)
             .commit()
     }
