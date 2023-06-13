@@ -1,10 +1,10 @@
 import org.gradle.api.JavaVersion
 
 object Config {
-    const val compile_sdk = 31
+    const val compile_sdk = 33
     const val application_id = "com.example.lightdictionary"
     const val min_sdk = 23
-    const val target_sdk = 31
+    const val target_sdk = 33
     val java_version = JavaVersion.VERSION_1_8
     const val jvm_target = "1.8"
 }
@@ -15,19 +15,19 @@ object Releases {
 }
 
 object Versions {
-    const val room = "2.3.0"
-    const val coil = "1.4.0"
-    const val koin = "3.1.3"
+    const val room = "2.5.1"
+    const val coil = "2.4.0"
+    const val koin = "3.4.0"
 
     const val retrofit = "2.9.0"
     const val retrofit_coroutines = "0.9.2"
 
-    const val ktx_core = "1.7.0"
-    const val ktx_fragment = "1.4.0"
-    const val gson = "2.8.7"
+    const val ktx_core = "1.8.0"
+    const val ktx_fragment = "1.5.7"
+    const val gson = "2.10.1"
 
-    const val app_compat = "1.4.0"
-    const val material = "1.4.0"
+    const val app_compat = "1.6.1"
+    const val material = "1.10"
     const val constraint = "2.1.2"
     const val swipe_refresh = "1.1.0"
 
