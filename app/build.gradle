@@ -28,6 +28,7 @@ android {
     kotlinOptions {
         jvmTarget = Config.jvm_target
     }
+    namespace 'com.example.lightdictionary'
 }
 
 dependencies {

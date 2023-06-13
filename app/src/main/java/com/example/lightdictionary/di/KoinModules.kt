@@ -33,6 +33,7 @@ val viewModelModule = module {
         viewModel<HistoryController.BaseViewModel> {
             HistoryViewModel(get<HistoryController.Interactor>())
         }
-    }
-}
 
+    }
+
+}
