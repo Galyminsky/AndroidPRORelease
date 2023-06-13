@@ -52,6 +52,7 @@ dependencies {
     implementation Ui.material
     implementation Ui.constraint_layout
     implementation Ui.swipe_refresh_layout
+    implementation 'androidx.recyclerview:recyclerview:1.3.0'
 
     //test
     testImplementation Testing.junit
